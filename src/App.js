@@ -1,8 +1,11 @@
+import Register from "./pages/Register";
+import Login from "./pages/Login"; 
 
 function App() {
   return (
     <div>
-      Hello
+      {/* <Register/> */}
+      <Login />
     </div>
   );
 }
