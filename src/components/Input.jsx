@@ -16,7 +16,7 @@ function Input() {
         <ImAttachment className="text-lg md:text-xl text-slate-500 cursor-pointer" />
         <input type="file" className="hidden" id="file" />
         <label htmlFor="file">
-          <img class="h-6 w-6 md:h-8 md:w-8 object-cover cursor-pointer" src={picture} alt="" />
+          <img className="h-6 w-6 md:h-8 md:w-8 object-cover cursor-pointer" src={picture} alt="" />
         </label>
         <div className="bg-gray-500 p-1 md:p-2 rounded-full cursor-pointer">
           <RiSendPlaneFill className="text-white text-sm md:text-lg" />
