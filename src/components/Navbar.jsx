@@ -1,23 +1,25 @@
-import React from "react";
+import React, { useContext } from "react";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
+import { AuthContext } from "../context/AuthContext";
 
 function Navbar() {
+
+  const { currentUser } = useContext(AuthContext);
   return (
-    <div className="flex justify-between items-center bg-teal-800 h-16 px-2">
-      <span className="hidden md:inline-block text-xl font-semibold text-teal-500">
+    <div className="flex justify-between items-center bg-slate-200 h-16 px-2">
+      <span className="hidden md:inline-block text-xl font-semibold text-purple-500">
         Let's Chat
       </span>
-      <div className="flex gap-3">
+      <div className="flex gap-3 ">
+        <span className="text-sm text-stone-800 py-2 font-semibold">{currentUser.displayName}</span>
         <img
-          className="h-8 w-8 object-cover rounded-full"
-          src="https://images.unsplash.com/photo-1661347561118-dafef99402ad?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80"
-          alt=""
+          className="h-10 w-10 object-cover rounded-full"
+          src={currentUser.photoURL} alt=""
         />
-        <span className="text-sm text-stone-200 py-2">Henok Urufa</span>
         <button
           onClick={() => signOut(auth)}
-          className="absolute bottom-2 left-2 text-sm bg-teal-200 rounded-md p-2 font-bold hover:bg-teal-300 cursor-pointer"
+          className="absolute bottom-2 left-2 text-sm bg-purple-200 rounded-md p-2 font-bold hover:bg-purple-300 cursor-pointer"
         >
           Logout
         </button>

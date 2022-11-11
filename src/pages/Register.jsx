@@ -1,12 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { auth, storage, db } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import picture from "../asset/picture.svg";
-import { useState } from "react";
 
 export default function Register() {
   const [err, setErr] = useState("");
@@ -26,14 +25,9 @@ export default function Register() {
 
       const storageRef = ref(storage, `${displayName + date}`);
 
-      const uploadTask = uploadBytesResumable(storageRef, file);
-
-      uploadTask.on(
-        (error) => {
-          setErr(error);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+      await uploadBytesResumable(storageRef, file).then(() => {
+        getDownloadURL(storageRef).then(async (downloadURL) => {
+          try {
             await updateProfile(res.user, {
               displayName,
               photoURL: downloadURL,
@@ -48,18 +42,22 @@ export default function Register() {
 
             await setDoc(doc(db, "userChats", res.user.uid), {});
             navigate("/")
-          });
-        }
-      );
+          } catch (err) {
+            console.log(err);
+            setErr(err);
+          }
+        })
+      });
     } catch (error) {
       setErr(error);
     }
   };
+  console.log(err);
 
   return (
-    <div className="h-screen bg-teal-800 flex items-center justify-center">
+    <div className="h-screen log-bg flex items-center justify-center">
       <div className="py-8 px-14 bg-white shadow-xl rounded-xl flex flex-col items-center">
-        <span className="text-2xl m-2 font-semibold text-teal-500">
+        <span className="text-2xl m-2 font-semibold text-purple-500">
           Let's Chat
         </span>
         <span className="mb-2 text-teal-800">Register</span>
@@ -68,7 +66,7 @@ export default function Register() {
             required
             type="text"
             placeholder="Username"
-            className="p-2 border-b border-indigo-600 placeholder:text-slate-400"
+            className="p-2 placeholder:text-slate-400"
           />
           <input
             required
@@ -99,12 +97,12 @@ export default function Register() {
                     file:mr-4 file:py-2 file:px-4
                     file:rounded-full file:border-0
                     file:text-sm file:font-semibold
-                  file:bg-violet-50 file:text-teal-700
+                  file:bg-violet-50 file:text-purple-700
                   hover:file:bg-teal-100"
               />
             </label>
           </div>
-          <button className="bg-teal-700 p-4 text-white font-semibold cursor-pointer rounded-lg hover:bg-teal-900">
+          <button className="bg-purple-800 p-4 text-white font-semibold cursor-pointer rounded-lg hover:bg-purple-900">
             Sign up
           </button>
           {err && (
@@ -113,7 +111,7 @@ export default function Register() {
             </span>
           )}
         </form>
-        <p className="mt-2 text-teal-800">Have an account? Login</p>
+        <p className="mt-2 ">Have an account? <Link to="/login" className="text-purple-800">Login</Link></p>
       </div>
     </div>
   );

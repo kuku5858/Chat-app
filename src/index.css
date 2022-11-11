@@ -34,3 +34,11 @@ body {
   height: calc(100% - 113px) !important;
 }
 
+
+.back-g {
+  background: url("./asset/bg.jpg");
+}
+
+.log-bg {
+  background: url("https://images.unsplash.com/photo-1458400411386-5ae465c4e57e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1885&q=80");
+}
