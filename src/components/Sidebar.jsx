@@ -6,7 +6,7 @@ import Chats from './Chats'
 
 function Sidebar() {
   return (
-    <div className="basis-2/5 rounded-l-lg bg-teal-700 overflow-scroll relative">
+    <div className="basis-2/5 rounded-l-lg bg-slate-100 overflow-scroll relative">
       <Navbar />
       <Search />
       <Chats />
